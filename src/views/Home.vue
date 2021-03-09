@@ -13,9 +13,11 @@
             {{ item.type }}<i class="iconfont" :class="icontype(item.type)"></i>
           </div>
           <div class="date">{{ item.date }}</div>
-          <p class="low">最{{ item.low }}</p>
-          ~
-          <p class="high">最{{ item.high }}</p>
+          <div class="temperature">
+            <p class="low">最{{ item.low }}</p>
+            ~
+            <p class="high">最{{ item.high }}</p>
+          </div>
           <div class="fengli">{{ item.fengli || item.fl }}</div>
           <div class="fengxiang">风向：{{ item.fengxiang || item.fx }}</div>
         </li>
@@ -35,15 +37,14 @@ export default {
       weatherList: [],
     };
   },
-  directives:{
-    clickDown:{
-      inserted(el){
-        el.click()
-      }
-    }
+  directives: {
+    clickDown: {
+      inserted(el) {
+        el.click();
+      },
+    },
   },
   methods: {
-    
     searchWeacher() {
       var that = this;
       axios
@@ -51,7 +52,7 @@ export default {
         .then((res) => {
           console.log(res);
           that.weatherList = res.data.data.forecast;
-          that.weatherList.splice(0,0,res.data.data.yesterday)
+          that.weatherList.splice(0, 0, res.data.data.yesterday);
         })
         .catch((err) => {
           console.log(err);
@@ -101,10 +102,10 @@ export default {
 .bg {
   position: absolute;
   width: 100vw;
-	height: 100vh;
+  height: 100vh;
   background-image: url("../../public/indexBg/animescape-2.jpg");
   background-size: cover;
-	background-attachment: fixed;
+  background-attachment: fixed;
   z-index: -1;
 }
 
@@ -130,7 +131,7 @@ li {
   border-radius: 8px;
   background-color: rgba(100, 100, 100, 0.5);
   color: #fff;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 p {
@@ -138,10 +139,22 @@ p {
 }
 
 i {
-  font-size: 36px;
+  font-size: 64px;
 }
 
-.date{
+.type {
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 20px;
+}
+
+.date {
   font-size: 32px;
+}
+
+.temperature {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 </style>
